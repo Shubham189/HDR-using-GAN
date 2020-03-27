@@ -2,23 +2,25 @@ import cv2
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras import layers as tfl
-img =cv2.imread("test.jpeg")
-print(img.shape)
-original_img=np.asarray(img)
+from PIL import Image
+import matplotlib.pyplot as plt
+#img =cv2.imread("test.jpeg")
+print(tfl)
+#original_img=np.asarray(img)
 #print(original_img)
 
 #hYPER parameters 
 
 epsilon=0.00005
 class hdrGAN:
-    def __init__(self,generator,discriminator,inputimg):
-        self.generator=generator
-        self.discriminator=discriminator
+    def __init__(self,inputimg):
+       
+       
         self.img=inputimg
         self.input_dim=self.img.shape
-    def generator(input_dim,output_dim,img):
-           with tf.variable_scope("generator")  as scope: 
-
+    def generator(self,input_dim,output_dim):
+          # with tf.compat.v1.VariableScope(reuse=False,name="generator") as scope: 
+           
             model=tf.keras.Sequential()
        ############################################################ down sampling layers ############################
        
@@ -27,19 +29,19 @@ class hdrGAN:
        
             model.add(tfl.Conv2D(filters=64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block1'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
 
             #second block
 
             model.add(tfl.Conv2D(filters=128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block2'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
 
             #third  block
 
             model.add(tfl.Conv2D(filters=256,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block3'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
 
 
 
@@ -47,53 +49,72 @@ class hdrGAN:
 
             model.add(tfl.Conv2D(filters=512,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block4'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
              
             #fifth block
 
             model.add(tfl.Conv2D(filters=512,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
-             
+            model.add(tfl.PReLU())
+            
+         
 
          ############################################################ UP sampling layers ############################
 
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
             model.add(tfl.Conv2D(filters=2*512,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
                
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
             model.add(tfl.Conv2D(filters=2*256,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
 
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2D(filters=2*128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2DTranspose(filters=2*128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2D(filters=2*64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2DTranspose(filters=2*64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())
+            model.add(tfl.PReLU())
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2D(filters=2*3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2DTranspose(filters=2*3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
-            model.add(tfl.PRelu())  
+            model.add(tfl.PReLU())  
+            
 
 
-            model.add(tfl.Conv2DTranspose(filters=3,kernel_size=(10,10)),strides=(2,2),padding='same',name='deconvolution layer')
-
-           return model              
+           
+            model.add(tfl.Conv2DTranspose(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='deconvolution layer',data_format="channels_last"))
+           # model = tf.reshape(model(img),shape=output_dim)
+            return model  
  
+img=np.array(Image.open('./images/ev'+str(0)+'.jpg'),dtype=np.float32)
+#img=np.array(Image.open('./test.jpeg'),dtype=np.float32)
+i,j,k=img.shape[0],img.shape[1],img.shape[2]
 
+img=tf.image.resize(img,(256,256))
+img=np.reshape(img,(1,img.shape[0],img.shape[1],img.shape[2]))
+GAN=hdrGAN(img)        
+print(img.shape)
+
+generator=GAN.generator(img.shape,img.shape)
+
+generator=generator(img)
+
+img=generator[0]
+imgplot = plt.imshow(img)
+plt.show()
+print(generator.shape)
                          
                
 
