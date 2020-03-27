@@ -26,7 +26,7 @@ class hdrGAN:
        
            # model.add(tfl.InputLayer(input_shape=input_dim,dtype=tf.int16))
             
-            model.add(tfl.Conv2D(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block1'))
+           # model.add(tfl.Conv2D(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block1'))
                # first block 
             
             model.add(tfl.Conv2D(filters=64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block1'))
@@ -64,39 +64,39 @@ class hdrGAN:
          ############################################################ UP sampling layers ############################
 
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2D(filters=2*512,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2D(filters=2*512,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block6'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())
                
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2D(filters=2*256,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2D(filters=2*256,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block7'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())
 
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2D(filters=2*128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2D(filters=2*128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block8'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2DTranspose(filters=2*64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2DTranspose(filters=2*64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block9'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2DTranspose(filters=2*3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2DTranspose(filters=2*3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block10'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())  
             
 
 
            
-            model.add(tfl.Conv2DTranspose(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='deconvolution layer',data_format="channels_last"))
+            model.add(tfl.Conv2DTranspose(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='deconvolution layer11',data_format="channels_last"))
            # model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())  
             # model.add(tfl.Flatten())
