@@ -1,7 +1,7 @@
 import numpy as np 
 import math
 from PIL import Image
-
+import matplotlib.pyplot as plt
 
 
 def weights(pixel_values):
@@ -147,6 +147,10 @@ print("response curve {}\n radiance map {}".format(response_curve,radiance_map))
 
 print('response curve len {}  radiance map len {}  '.format(len(response_curve),len(radiance_map)))
 
+
+
+imgplot = plt.imshow(radiance_map)
+plt.show()
 #f= open('./images/ev0.jpg','rb')
 #a=f.read()      
 #print(a[:350])      

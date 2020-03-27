@@ -24,9 +24,11 @@ class hdrGAN:
             model=tf.keras.Sequential()
        ############################################################ down sampling layers ############################
        
-       
+           # model.add(tfl.InputLayer(input_shape=input_dim,dtype=tf.int16))
+            
+            model.add(tfl.Conv2D(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block1'))
                # first block 
-       
+            
             model.add(tfl.Conv2D(filters=64,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block1'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())
@@ -76,7 +78,7 @@ class hdrGAN:
 
             
             model.add(tfl.UpSampling2D(size=(2,2),interpolation='nearest'))
-            model.add(tfl.Conv2DTranspose(filters=2*128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
+            model.add(tfl.Conv2D(filters=2*128,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block5'))
             model.add(tfl.BatchNormalization(epsilon=epsilon))
             model.add(tfl.PReLU())
 
@@ -95,10 +97,13 @@ class hdrGAN:
 
            
             model.add(tfl.Conv2DTranspose(filters=3,kernel_size=(10,10),strides=(2,2),padding='same',name='deconvolution layer',data_format="channels_last"))
-           # model = tf.reshape(model(img),shape=output_dim)
+           # model.add(tfl.BatchNormalization(epsilon=epsilon))
+            model.add(tfl.PReLU())  
+            # model.add(tfl.Flatten())
+            
             return model  
  
-img=np.array(Image.open('./images/ev'+str(0)+'.jpg'),dtype=np.float32)
+img=np.array(Image.open('./images/ev'+str(0)+'.jpg'),dtype=np.int16)
 #img=np.array(Image.open('./test.jpeg'),dtype=np.float32)
 i,j,k=img.shape[0],img.shape[1],img.shape[2]
 
@@ -111,9 +116,15 @@ generator=GAN.generator(img.shape,img.shape)
 
 generator=generator(img)
 
-img=generator[0]
+#generator=np.reshape(generator,(1,256,256,3))
+
+img=generator[0]*256
+#img=tf.dtypes.cast(img, tf.int16)
+print(img)
 imgplot = plt.imshow(img)
 plt.show()
+
+#tf.image.encode_png(img)
 print(generator.shape)
                          
                
