@@ -131,6 +131,7 @@ def local_tone_mapping(image,gamma):
      # 
 ########### CALCULATING THE EV values at a given ISO >>> N=stop number at f/stop number ex: if aperture=f/4 then N=4 and t=exposure time or shutter speed######  
 #   EV=log2(N^2/t)
+#   more info -- https://www.scantips.com/lights/evchart.html    https://en.wikipedia.org/wiki/Exposure_value
 ##############################################
 
 def EV(N,T,ISO):
