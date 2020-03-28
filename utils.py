@@ -169,11 +169,11 @@ print('response curve len {}  radiance map len {}  '.format(len(response_curve),
 imgplot = plt.imshow(radiance_map)
 plt.show()
 """
-print(EV(1.7,1/10,100))
-#f= open('./images/ev0.jpg','rb')
-#a=f.read()      
-#print(a[:350])      
-
+#print(EV(1.7,1/10,100))
+f= open('./images/ev0.jpg','rb')
+a=f.read()      
+print(a[:500])      
+### ord function   https://stackoverflow.com/questions/5851607/python3-parsing-jpeg-dimension-info   parsing file struct
 
          
 
