@@ -127,7 +127,23 @@ def local_tone_mapping(image,gamma):
 
              image[i][j]=math.pow(image[i][j],gamma[i][j])
 
-     # each pixel is tone mapped differently accoring to location         
+     # each pixel is tone mapped differently accoring to location      
+     # 
+########### CALCULATING THE EV values at a given ISO >>> N=stop number at f/stop number ex: if aperture=f/4 then N=4 and t=exposure time or shutter speed######  
+#   EV=log2(N^2/t)
+##############################################
+
+def EV(N,T,ISO):
+     n=N
+     t=T
+     iso=ISO
+
+     EV = math.log(math.pow(N,2)/T,2)-math.log((iso/100),2)
+     EV=round(EV,3)
+     return EV
+
+"""
+
 
 imglist=[]        
 for i in range(5): 
@@ -151,6 +167,8 @@ print('response curve len {}  radiance map len {}  '.format(len(response_curve),
 
 imgplot = plt.imshow(radiance_map)
 plt.show()
+"""
+print(EV(1.7,1/10,100))
 #f= open('./images/ev0.jpg','rb')
 #a=f.read()      
 #print(a[:350])      
