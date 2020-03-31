@@ -13,6 +13,7 @@ class loss :
         self.Gminus=gminus
         self.x=x
         self.y=np.ones_like()
+        self.GaNLossD=0
   
     def l1loss(self,x,y,gloss):
          if(gloss=='gplus'):
@@ -39,14 +40,14 @@ class loss :
         
           Gloss=np.square(D(G(self.x),self.x) - 1 ) 
           Dloss= 1/2(np.square(D(self.y,self.x)-1) ) + 1/2(np.square(D(G(self.x),self.x) -1))
-
+          self.GaNLossD=Dloss
           
 
 
-         return Gloss,Dloss
+         return Gloss
     def Gloss(self,g):     
          delta=100
-         Gloss=ganloss(self.x,g)[0]+ delta*l1loss(self.x,self.y,g)
+         Gloss=ganloss(self.x,g)+ delta*l1loss(self.x,self.y,g)
          #Gminus=ganloss(self.x,'gminus')[0]+ delta*l1loss(self.x,self.y,'gminus')
          
          return Gloss
