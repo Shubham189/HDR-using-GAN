@@ -61,14 +61,14 @@ class loss :
          
          Dreal=D(Iev1p,Iev1) 
          Dfake=D(G(Iev1),Iev1) 
-         Dplus=tf.math.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=Dreal,labels=tf.ones_like(Dreal)))
-             +tf.math.reduce_mean((tf.nn.sigmoid_cross_entropy_with_logits(logits=Dfake,labels=tf.zeros_like(Dfake))))  
+         Dplus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(math.log(1-Dfake))
  
 
          Dreal=D(Iev1m,Iev1) 
          Dfake=D(G(Iev1),Iev1) 
-         Dminus=tf.math.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=Dreal,labels=tf.ones_like(Dreal)))
-             +tf.math.reduce_mean((tf.nn.sigmoid_cross_entropy_with_logits(logits=Dfake,labels=tf.zeros_like(Dfake))))  
+         Dminus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(math.log(1-Dfake))
+         
+         return (1-Dplus,1-Dminus)
  
             
            
