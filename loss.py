@@ -40,7 +40,7 @@ class loss :
           Gloss=np.square(D(G(self.x),self.x) - 1 ) 
           Dloss= 1/2(np.square(D(self.y,self.x)-1) ) + 1/2(np.square(D(G(self.x),self.x) -1))
 
-
+          
 
 
          return Gloss,Dloss
@@ -70,7 +70,11 @@ class loss :
            Dminus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
            Dloss=Dminus
          
+
+         if(Dloss<0):
+              Dloss=-Dloss
          return (1-Dloss)
+
      
             
            
