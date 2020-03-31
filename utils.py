@@ -120,6 +120,11 @@ def local_tone_mapping(image,gamma):
      # gamma is an 2d array of the same shape as of image and contains the gamma values for each pixels
      #http://cs.brown.edu/courses/cs129/results/proj5/njooma/
      #https://en.wikipedia.org/wiki/Tone_mapping
+
+     ### tone mapping is done using gamma compression########
+
+
+     ##### local tone mapping methods gradient domain high dynamic compression #######
      rows,cols=image.shape[0],image.shape[1]
      assert image.shape==gamma.shape
      for i in range(rows):
@@ -169,14 +174,14 @@ print('response curve len {}  radiance map len {}  '.format(len(response_curve),
 imgplot = plt.imshow(radiance_map)
 plt.show()
 """
-#print(EV(1.7,1/10,100))
-f= open('./images/ev0.jpg','rb')
-a=f.read()      
-print(a[:500])      
+#print(EV(1,1,100))
+#f= open('./images/ev0.jpg','rb')
+#a=f.read()      
+#print(a[:500])      
 ### ord function   https://stackoverflow.com/questions/5851607/python3-parsing-jpeg-dimension-info   parsing file struct
 
          
-
+### 11 1/500  1/400 10 8 1/250
       
          
 

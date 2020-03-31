@@ -4,6 +4,7 @@ import numpy as np
 from tensorflow.keras import layers as tfl
 from PIL import Image
 import matplotlib.pyplot as plt
+from utils import EV
 #img =cv2.imread("test.jpeg")
 print(tfl)
 #original_img=np.asarray(img)
@@ -102,7 +103,34 @@ class hdrGAN:
             # model.add(tfl.Flatten())
             
             return model  
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 img=np.array(Image.open('./images/ev'+str(0)+'.jpg'),dtype=np.int16)
 #img=np.array(Image.open('./test.jpeg'),dtype=np.float32)
 i,j,k=img.shape[0],img.shape[1],img.shape[2]
@@ -126,6 +154,6 @@ plt.show()
 
 #tf.image.encode_png(img)
 print(generator.shape)
-                         
-               
-
+        """                 
+  ###########################image dataset  https://www2.cs.sfu.ca/~colour/data/funt_hdr/          #########33333333  
+  ######################   https://www.scss.tcd.ie/Emin.Zerman/databaseInformations/_hdrImgVidList.html   ##################             
