@@ -50,7 +50,7 @@ class loss :
          #Gminus=ganloss(self.x,'gminus')[0]+ delta*l1loss(self.x,self.y,'gminus')
          
          return Gloss
-    def Dloss(self,dloss,iev1,iev1p,iev1m):
+    def Dloss(self,dloss,iev1,iev1p,iev1m,g):
          if(dloss == 'dplus'):
              D=self.Dplus
          else if (dloss=='dminus'):    
@@ -58,17 +58,19 @@ class loss :
          Iev1p=iev1p
          Iev1=iev1
          Iev1m=iev1m
-         
-         Dreal=D(Iev1p,Iev1) 
-         Dfake=D(G(Iev1),Iev1) 
-         Dplus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
- 
+         if(g=='gplus'):
+          Dreal=D(Iev1p,Iev1) 
+          Dfake=D(G(Iev1),Iev1) 
+          Dplus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
 
-         Dreal=D(Iev1m,Iev1) 
-         Dfake=D(G(Iev1),Iev1) 
-         Dminus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
+          Dloss=Dplus
+         else if(g=='gminus'):
+           Dreal=D(Iev1m,Iev1) 
+           Dfake=D(G(Iev1),Iev1) 
+           Dminus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
+           Dloss=Dminus
          
-         return (1-Dplus,1-Dminus)
- 
+         return (1-Dloss)
+     
             
            
