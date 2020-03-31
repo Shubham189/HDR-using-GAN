@@ -61,12 +61,12 @@ class loss :
          
          Dreal=D(Iev1p,Iev1) 
          Dfake=D(G(Iev1),Iev1) 
-         Dplus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(math.log(1-Dfake))
+         Dplus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
  
 
          Dreal=D(Iev1m,Iev1) 
          Dfake=D(G(Iev1),Iev1) 
-         Dminus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(math.log(1-Dfake))
+         Dminus=tf.reduce_mean(math.log(Dreal))+tf.reduce_mean(1-math.log(Dfake))
          
          return (1-Dplus,1-Dminus)
  
