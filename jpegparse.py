@@ -4,6 +4,9 @@ import io
 height = -1
 width = -1
 ####  url= https://stackoverflow.com/questions/5851607/python3-parsing-jpeg-dimension-info
+
+
+
 dafile = open('./images/ev0.jpg', 'rb')
 filebyte=dafile.read()
 jpeg = io.BytesIO(filebyte)

@@ -1,7 +1,7 @@
 import numpy as np
 import math
 # #########    https://www.tensorflow.org/tutorials/generative/pix2pix ######
-
+############   https://github.com/eriklindernoren/Keras-GAN/blob/master/dcgan/dcgan.py        ###########
 #https://www.kaggle.com/rejpalcz/best-loss-function-for-f1-score-metric
 
 class loss :
