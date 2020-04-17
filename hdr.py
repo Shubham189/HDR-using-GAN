@@ -62,7 +62,11 @@ class disc:
 
             def dplus(self,input_dim,output_dim):
                       # with tf.compat.v1.VariableScope(reuse=False,name="discriminator") as scope: 
-                      
+                      inp = tf.keras.layers.Input(shape=[256, 256, 3], name='input_image')
+                      tar = tf.keras.layers.Input(shape=[256, 256, 3], name='target_image')
+
+                      x = tf.keras.layers.concatenate([inp, tar])
+                        
                       model=tf.keras.Sequential()
                       model.add(tfl.Conv2D(filters=6,kernel_size=(10,10),strides=(2,2),padding='same',name='conv_block0'))
                       
